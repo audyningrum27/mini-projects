@@ -1,0 +1,38 @@
+# 📝 Catatan Belajar: Mini-Project "Donation Hours" (Python & JavaScript)
+- Ditulis oleh Gemini AI, dari hasil pertanyaan dan diskusi yang saya lakukan.
+
+## 1. Fundamental JavaScript (JS)
+* **Deklarasi Variabel (`let` vs `const` vs `var`):**
+  * `const`: Digunakan untuk nilai mutlak yang tidak boleh berubah (contoh: `const donation_standard = 50000;`).
+  * `let`: Digunakan untuk nilai yang akan terus diperbarui selama program berjalan (contoh: `let total_donation = 0;`). Saat meng-*update* nilainya, jangan tulis `let` lagi (cukup `total_donation += new_donation;`) agar tidak membuat variabel duplikat yang tumpang tindih.
+  * `var`: Sudah usang dan dihindari karena masalah *scope leaking* (bocor dari blok kode) yang rawan memicu *bug*.
+* **Penggunaan Titik Koma (`;`):**
+  * JavaScript memiliki fitur *Automatic Semicolon Insertion* (ASI) yang bisa menebak akhiran baris, tidak se-*strict* Java. Namun, praktik terbaik (*best practice*) tetap mewajibkan penggunaan `;` di akhir perintah untuk mencegah *bug* yang sulit dilacak akibat mesin salah menebak baris kode.
+* **Input dan Node.js:**
+  * Fungsi `prompt()` aslinya hanya hidup di *browser* (memunculkan *pop-up*). Untuk menggunakannya di terminal VS Code via Node.js, wajib menginstal modul pihak ketiga (`npm install prompt-sync`) dan memanggilnya di baris paling atas: `const prompt = require('prompt-sync')();`.
+* **Manipulasi Angka dan Matematika:**
+  * Pemisah ribuan (Rupiah): Tidak bisa pakai simbol di dalam variabel. Gunakan fungsi bawaan `.toLocaleString('id-ID')`.
+  * Ubah teks ke angka: Gunakan `Number.parseInt()`. Jika *user* memasukkan huruf, hasilnya bukan *error/crash*, melainkan `NaN` (*Not a Number*).
+  * Pembagian bulat: JS tidak punya `//`. Gunakan pembagian biasa `/` lalu bungkus dengan `Math.floor()` untuk membulatkan ke bawah.
+* **String Formatting:** Menggunakan *Template Literals* dengan tanda *backtick* (```) dan memanggil variabel dengan `${nama_variabel}`.
+* **Naming Convention:** Standar penamaan variabel dan fungsi di JS adalah *camelCase* (contoh: `targetHours`).
+
+## 2. Fundamental Python
+* **Matematika (Pembagian):** * `/` menghasilkan angka desimal (*float*) pembagian asli (contoh: `30000 / 20000 = 1.5`).
+  * `//` (*floor division*) menghasilkan pembagian bulat ke bawah (contoh: `30000 // 20000 = 1`).
+* **String Formatting:** Menggunakan *F-Strings* dengan awalan `f` (contoh: `f"Teks {nama_variabel}"`). Untuk memformat angka ribuan, cukup tambahkan `:,` di dalam kurung kurawal (contoh: `{total_donation:,}`).
+* **Teks Multi-Baris (Multi-line String):**
+  * Gunakan tanda kurung `()` yang membungkus beberapa string dengan awalan `f"\n..."` agar kode tetap bisa di-Enter/diberi spasi indentasi tanpa menghasilkan `SyntaxError` atau spasi berlebih di terminal.
+* **Error Handling (Input Teks):**
+  * Jika `int(input())` menerima huruf, Python akan langsung *crash* (*ValueError*). Wajib dibungkus menggunakan blok `try - except ValueError` di dalam perulangan `while True:`.
+* **Naming Convention:** Standar penamaan variabel (PEP 8) di Python adalah *snake_case* (contoh: `target_hours`).
+
+## 3. Logika Algoritma & Validasi (Berlaku untuk Python & JS)
+* **Validasi Angka Minus:** Saat meminta donasi baru, mengecek apakah inputnya angka saja tidak cukup. Wajib menambahkan kondisi `< 0` (kurang dari nol) agar *user* tidak bisa memasukkan nilai minus yang membuat donasi terkumpul malah berkurang.
+* **Nested Loops (Looping Bersarang):** Saat program meminta input pilihan (seperti "tambah jam"), proses input tersebut wajib dibungkus dengan *loop* `while` miliknya sendiri. Jika tidak, perintah `continue` (saat *user* salah ketik) akan melompat terlalu jauh ke *loop* utama dan merusak *User Experience* (UX).
+
+## 4. Standar Git & GitHub
+* **Aturan `node_modules`:** Folder `node_modules` adalah gudang kode raksasa yang otomatis dibuat saat melakukan `npm install`. Folder ini **haram** dinaikkan ke GitHub.
+* **Cara Menyembunyikan (`.gitignore`):** Buat *file* bernama `.gitignore` di folder utama proyek, lalu tulis `node_modules/` di dalamnya. Git hanya perlu mengunggah *file* `package.json` (resep instalasinya).
+* **Naming Convention Repository:** Standar penamaan *file* pendukung dan nama repositori di GitHub menggunakan *kebab-case* (contoh: `mini-projects` atau `algorithm-practice`) agar ramah URL dan SEO.
+* **Pesan Commit yang Profesional:** Gunakan *Imperative Mood* (kata perintah) dengan standar *Conventional Commits* agar rapi dibaca. Contoh: `git commit -m "feat: add input validation for donation logic"`.
